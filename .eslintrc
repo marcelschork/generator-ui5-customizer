@@ -1,0 +1,44 @@
+{
+    "env": {
+        "node": true,
+        "es2021": true
+    },
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "rules": {
+        "block-scoped-var": "warn",
+        "keyword-spacing": "error",
+        "space-unary-ops": "error",
+        "camelcase": "warn",
+        "consistent-return": "warn",
+        "no-warning-comments": "warn",
+        "default-case": "warn",
+        "no-console": "error",
+        "no-unused-vars": "error",
+        "no-debugger": "error",
+        "no-trailing-spaces": [
+            "error",
+            {
+                "ignoreComments": true
+            }
+        ],
+        "semi": ["warn", "always"],
+        "quotes": ["warn", "single"],
+        "key-spacing": [
+            "warn",
+            {
+                "beforeColon": false
+            }
+        ],
+        "comma-spacing": [
+            "warn",
+            {
+                "before": false,
+                "after": true
+            }
+        ],
+        "no-shadow": "error",
+        "no-irregular-whitespace": "error"
+    }
+}
