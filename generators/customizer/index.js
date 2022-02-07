@@ -1,6 +1,6 @@
 'use strict';
 const Generator = require('yeoman-generator'),
-    //fileaccess = require('../../helpers/fileaccess'),
+    { manipulateJSON, manipulateYAML } = require('generator-template-ui5-project/helpers/fileaccess'),
     path = require('path'),
     glob = require('glob');
 
@@ -20,16 +20,32 @@ module.exports = class extends Generator {
         });
     }
 
-    end() {
-        this.spawnCommandSync('git', ['add', '.'], {
-            cwd: this.destinationPath(),
-        });
-        this.spawnCommandSync(
-            'git',
-            ['commit', '--quiet', '--allow-empty', '-m', 'Customize easy-ui5 project template'],
-            {
-                cwd: this.destinationPath(),
-            }
-        );
+    async extendPackageJson() {
+        const oPackageJsonExtension = {
+            devDependencies: {
+                'ui5-task-transpile': '^0.3.4',
+            },
+            ui5: {
+                dependencies: ['ui5-task-transpile'],
+            },
+        };
+        await manipulateJSON.call(this, '/package.json', oPackageJsonExtension);
+    }
+
+    async install() {
+        const oUi5YamlExtension = {
+            builder: {
+                customTasks: [
+                    {
+                        name: 'ui5-task-transpile',
+                        afterTask: 'replaceVersion',
+                        configuration: {
+                            transpileAsync: true,
+                        },
+                    },
+                ],
+            },
+        };
+        await manipulateYAML.call(this, '/uimodule/ui5.yaml', oUi5YamlExtension);
     }
 };
