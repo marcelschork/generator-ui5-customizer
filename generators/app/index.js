@@ -8,7 +8,7 @@ module.exports = class extends Generator {
 
     prompting() {
         if (!this.options.embedded) {
-            this.log(yosay(`Welcome to the ${chalk.red('easy-ui5-project-customizer')} generator!`));
+            this.log(yosay(`Welcome to the ${chalk.red('easy-ui5-customizer')} generator!`));
         }
 
         this.composeWith(require.resolve('generator-template-ui5-project/generators/app'), {

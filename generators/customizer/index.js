@@ -23,10 +23,11 @@ module.exports = class extends Generator {
     async extendPackageJson() {
         const oPackageJsonExtension = {
             devDependencies: {
+                'ui5-middleware-livetranspile': '^0.3.5',
                 'ui5-task-transpile': '^0.3.4',
             },
             ui5: {
-                dependencies: ['ui5-task-transpile'],
+                dependencies: ['ui5-task-transpile', 'ui5-middleware-livetranspile'],
             },
         };
         await manipulateJSON.call(this, '/package.json', oPackageJsonExtension);
@@ -34,6 +35,17 @@ module.exports = class extends Generator {
 
     async install() {
         const oUi5YamlExtension = {
+            server: {
+                customMiddleware: [
+                    {
+                        name: 'ui5-middleware-livetranspile',
+                        afterMiddleware: 'compression',
+                        configuration: {
+                            transpileAsync: true,
+                        },
+                    },
+                ],
+            },
             builder: {
                 customTasks: [
                     {
