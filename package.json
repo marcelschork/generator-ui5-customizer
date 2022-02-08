@@ -2,6 +2,7 @@
     "name": "generator-ui5-customizer",
     "version": "0.0.1",
     "description": "(Sub-)generator for customizing an easy-ui5 project template",
+    "main": "index.js",
     "scripts": {
         "format": "prettier --write .",
         "lint": "eslint .",
