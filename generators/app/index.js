@@ -11,6 +11,7 @@ module.exports = class extends Generator {
             this.log(yosay(`Welcome to the ${chalk.red('easy-ui5-customizer')} generator!`));
         }
 
+        // we want to overwrite files from the community app temlate so this generator needs to run first
         this.composeWith(require.resolve('generator-template-ui5-project/generators/app'), {
             embedded: true,
         });

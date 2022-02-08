@@ -24,9 +24,13 @@ module.exports = class extends Generator {
 
     async extendPackageJson() {
         const packageJsonExtension = {
+            scripts: {
+                cowsay: 'cowsay "UI5ers live <3"',
+            },
             devDependencies: {
                 'ui5-middleware-livetranspile': '^0.3.5',
                 'ui5-task-transpile': '^0.3.4',
+                cowsay: '^1.5.0',
             },
             ui5: {
                 dependencies: ['ui5-task-transpile', 'ui5-middleware-livetranspile'],
@@ -35,6 +39,12 @@ module.exports = class extends Generator {
         await manipulateJSON.call(this, '/package.json', packageJsonExtension);
     }
 
+    /*
+     * We have to overwrite the ui5.yaml in the install task since the community app generator
+     * uses a subgenerator for scaffolding the webapp folder and the ui5.yaml.
+     * This subgenerator is composed in the writing task and therefore runs
+     * after the writing task of the customizer generator.
+     */
     async install() {
         const ui5YamlExtension = {
             server: {
@@ -61,5 +71,11 @@ module.exports = class extends Generator {
             },
         };
         await manipulateYAML.call(this, '/uimodule/ui5.yaml', ui5YamlExtension);
+    }
+
+    end() {
+        this.spawnCommandSync('npm', ['run', 'cowsay'], {
+            cwd: this.destinationPath(),
+        });
     }
 };
