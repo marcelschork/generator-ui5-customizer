@@ -8,22 +8,22 @@ module.exports = class extends Generator {
     static hidden = true;
 
     async writing() {
-        const oConfig = this.config.getAll();
+        const config = this.config.getAll();
 
         this.sourceRoot(path.join(__dirname, 'templates'));
         glob.sync('**', {
             cwd: this.sourceRoot(),
             nodir: true,
         }).forEach((file) => {
-            const sOrigin = this.templatePath(file);
-            const sTarget = this.destinationPath(file.replace(/^_/, '').replace(/\/_/, '/'));
+            const origin = this.templatePath(file);
+            const target = this.destinationPath(file.replace(/^_/, '').replace(/\/_/, '/'));
 
-            this.fs.copyTpl(sOrigin, sTarget, oConfig);
+            this.fs.copyTpl(origin, target, config);
         });
     }
 
     async extendPackageJson() {
-        const oPackageJsonExtension = {
+        const packageJsonExtension = {
             devDependencies: {
                 'ui5-middleware-livetranspile': '^0.3.5',
                 'ui5-task-transpile': '^0.3.4',
@@ -32,11 +32,11 @@ module.exports = class extends Generator {
                 dependencies: ['ui5-task-transpile', 'ui5-middleware-livetranspile'],
             },
         };
-        await manipulateJSON.call(this, '/package.json', oPackageJsonExtension);
+        await manipulateJSON.call(this, '/package.json', packageJsonExtension);
     }
 
     async install() {
-        const oUi5YamlExtension = {
+        const ui5YamlExtension = {
             server: {
                 customMiddleware: [
                     {
@@ -60,6 +60,6 @@ module.exports = class extends Generator {
                 ],
             },
         };
-        await manipulateYAML.call(this, '/uimodule/ui5.yaml', oUi5YamlExtension);
+        await manipulateYAML.call(this, '/uimodule/ui5.yaml', ui5YamlExtension);
     }
 };
