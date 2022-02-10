@@ -12,7 +12,7 @@ yo easy-ui5 --addGhOrg=marcelschork
 ## Standalone usage
 
 ```markdown
-npm install -g yo marcelschork/generator-ui5-customizer
+npm install -g yo marcelschork/generator-ui5-customizer#main
 yo ui5-customizer
 ```
 
