@@ -5,8 +5,6 @@ const Generator = require('yeoman-generator'),
     glob = require('glob');
 
 module.exports = class extends Generator {
-    static hidden = true;
-
     async writing() {
         const config = this.config.getAll();
 
